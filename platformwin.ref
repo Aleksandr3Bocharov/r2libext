@@ -7,7 +7,9 @@
 
 PLATFORM    START
             ENTRY Platform, DirectorySeparator(DirSep)
-            ENTRY IsDirectorySeparator(IsDirSep), PathSeparator(PathSep)
+            ENTRY IsDirectorySeparator(IsDirSep)
+            ENTRY PathSeparator(PathSep)
+            EMPTY Windows, True, False
 
 Platform    = /Windows/
 
