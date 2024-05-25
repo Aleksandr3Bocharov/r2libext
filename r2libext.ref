@@ -9,91 +9,7 @@
 * Расширение библиотеки Рефал-2.
 * http://www.refal.net/~belous/refal2-r.htm
 *====================================================================
-
-
-/**
-  <Apply t.Closure e.Arg> == e.Res
-
-  t.Closure ::=
-      s.WORD
-    | (t.Closure e.Bounded)
-  e.Arg, e.Res, e.Bounded ::= e.AnyExpr
-*/
-$ENTRY Apply {
-    s.Fn e.Argument = <Mu s.Fn e.Argument>;
-  
-    (t.Closure e.Bounded) e.Argument
-      = <Apply t.Closure e.Bounded e.Argument>;
-  }
-  
-  
-  /**
-    <Map t.Closure t.Item*> == e.ItemRes*
-  
-    <Apply t.Closure t.Item> == e.ItemRes
-  */
-  $ENTRY Map {
-    t.Fn t.Next e.Tail = <Apply t.Fn t.Next> <Map t.Fn e.Tail>;
-  
-    t.Fn = ;
-  }
-  
-  
-  /**
-    <Reduce t.Closure t.Accum t.Item*> == t.Accum′
-  
-    <Apply t.Closure t.Accum t.Item> == t.Accum′
-    t.Accum′ ::= t.Accum
-  */
-  $ENTRY Reduce {
-    t.Fn t.Acc t.Next e.Tail
-      = <Reduce
-          t.Fn <Apply t.Fn t.Acc t.Next> e.Tail
-        >;
-  
-    t.Fn t.Acc = t.Acc;
-  }
-  
-  
-  /**
-    <MapAccum t.Closure t.Accum t.Item*> == t.Accum′ e.ItemRes*
-  
-    <Apply t.Closure t.Accum t.Item> == t.Accum′ e.ItemRes
-    t.Accum′ ::= t.Accum
-  */
-  $ENTRY MapAccum {
-    t.Fn t.Acc e.Tail = <DoMapAccum t.Fn t.Acc () e.Tail>;
-  }
-  
-  DoMapAccum {
-    t.Fn t.Acc (e.Scanned) t.Next e.Tail
-      = <DoMapAccum
-          t.Fn
-          <MapAccum-AddScanned
-            <Apply t.Fn t.Acc t.Next> (e.Scanned)
-          >
-          e.Tail
-        >;
-  
-    t.Fn t.Acc (e.Scanned) = t.Acc e.Scanned;
-  }
-  
-  MapAccum-AddScanned {
-    t.Acc e.StepScanned (e.Scanned) =
-      t.Acc (e.Scanned e.StepScanned);
-  }
-  
-  
-  /**
-    <DelAccumulator t.Accum e.AnyExpr> == e.AnyExpr
-  */
-  $ENTRY DelAccumulator {
-    t.Acc e.Tail = e.Tail;
-  }
-  
-  LOAD-SAVE-HANDLE { = 39; }
-  
-  
+    
   /**
     <LoadFile e.FileName> == e.Lines
   
@@ -166,13 +82,8 @@ $ENTRY Apply {
     t.Sample e.Items = False;
   }
   
-  
-  /**
-    <Unique t.Item*> == t.Item*
-  */
-  $ENTRY Unique {
-    e.Uniques t.Repeated e.Items-B t.Repeated e.Items-E
-      = e.Uniques <Unique e.Items-B t.Repeated e.Items-E>;
-  
-    e.Uniques = e.Uniques;
-  }
+* <Set W*> == W*
+Set +
+    EU WR EB WR EE +
+            = EU <Set EB WR EE>
+    EU      = EU
