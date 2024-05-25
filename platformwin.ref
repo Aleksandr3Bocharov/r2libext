@@ -2,8 +2,17 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-05-24
-* https://github.com/Aleksandr3Bocharov/refal2libraryex
+* 2024-05-25
+* https://github.com/Aleksandr3Bocharov/r2libraryex
+
+*====================================================================
+* Расширение библиотеки Рефал-2
+* http://www.refal.net/~belous/refal2-r.htm
+* Модуль "platformwin" с реализацией
+* специфичных функций в среде Windows.
+* Для среды POSIX используется
+* аналогичный модуль "platformposix".
+*====================================================================
 
 PLATFORM    START
             ENTRY Platform, DirectorySeparator(DirSep)
@@ -19,7 +28,7 @@ DirectorySeparator +
 IsDirectorySeparator +
     '\\'    = /True/
     '/'     = /True/
-    EO      = /False/
+    SO      = /False/
 
 PathSeparator +
             = ';'
