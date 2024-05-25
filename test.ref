@@ -1,0 +1,8 @@
+TEST    START
+        EXTRN Prout, Platform, DirSep, IsDirSep, PathSep
+        ENTRY Go
+
+Go      = <Prout <Platform>' '<DirSep>' '<IsDirSep 'g'>' ' + 
+        <IsDirSep '/'>' '<IsDirSep '\\'>' '<PathSep>'\n'>
+
+        END
