@@ -46,41 +46,37 @@
     (e.Line) = <Putout <LOAD-SAVE-HANDLE> e.Line>;
   }
   
-  /**
-    <Trim s.CHAR*> == s.CHAR*
-    <Trim-L s.CHAR*> == s.CHAR*
-    <Trim-R s.CHAR*> == s.CHAR*
-  */
-  $ENTRY Trim {
-    e.Line = <Trim-L <Trim-R e.Line>>;
-  }
+* <Trim S(O)*> == S(O)*
+Trim +
+    E(O)L      = <Trim-L <Trim-R EL>>
   
-  
+* <Trim-L S(O)*> == S(O)*
   $ENTRY Trim-L {
     ' ' e.Line = <Trim-L e.Line>;
     '\t' e.Line = <Trim-L e.Line>;
+    '\f' e.Line = <Trim-L e.Line>;
+    '\v' e.Line = <Trim-L e.Line>;
     '\r' e.Line = <Trim-L e.Line>;
     '\n' e.Line = <Trim-L e.Line>;
     e.Line = e.Line;
   }
   
-  
+* <Trim-R S(O)*> == S(O)*
   $ENTRY Trim-R {
     e.Line ' ' = <Trim-R e.Line>;
     e.Line '\t' = <Trim-R e.Line>;
+    e.Line '\f' = <Trim-R e.Line>;
+    e.Line '\v' = <Trim-R e.Line>;
     e.Line '\r' = <Trim-R e.Line>;
     e.Line '\n' = <Trim-R e.Line>;
     e.Line = e.Line;
   }
   
-  
-  /**
-    <OneOf t.Elem e.SampleElems> == True | False
-  */
-  $ENTRY OneOf {
-    t.Sample e.Items-B t.Sample e.Items-E = True;
-    t.Sample e.Items = False;
-  }
+* <Exist W E> == /True/ | /False/
+Exist +
+    WS EB WS EE +
+            = /True/
+    WS EI   = /False/
   
 * <Set W*> == W*
 Set +
