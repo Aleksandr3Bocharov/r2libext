@@ -9,7 +9,12 @@
 * Расширение библиотеки Рефал-2.
 * http://www.refal.net/~belous/refal2-r.htm
 *====================================================================
-    
+
+R2LIBEXT    START
+            ENTRY Trim, Trim-L, Trim-R, WhiteSpaces 
+            ENTRY Exist, Set
+            EMPTY True, False
+
   /**
     <LoadFile e.FileName> == e.Lines
   
@@ -46,11 +51,13 @@
     (e.Line) = <Putout <LOAD-SAVE-HANDLE> e.Line>;
   }
   
-* <Trim S(O)*> == S(O)*
+* <Trim E> == E
 Trim +
-    E(O)L      = <Trim-L <Trim-R EL>>
-  
-* <Trim-L S(O)*> == S(O)*
+    EL      = <Trim-L <Trim-R EL>>
+
+WhiteSpaces S   ' \n\t\v\f\r'
+
+* <Trim-L E> == E
   $ENTRY Trim-L {
     ' ' e.Line = <Trim-L e.Line>;
     '\t' e.Line = <Trim-L e.Line>;
@@ -61,7 +68,7 @@ Trim +
     e.Line = e.Line;
   }
   
-* <Trim-R S(O)*> == S(O)*
+* <Trim-R E> == E
   $ENTRY Trim-R {
     e.Line ' ' = <Trim-R e.Line>;
     e.Line '\t' = <Trim-R e.Line>;
