@@ -58,26 +58,16 @@ Trim +
 WhiteSpaces S   ' \n\t\v\f\r'
 
 * <Trim-L E> == E
-  $ENTRY Trim-L {
-    ' ' e.Line = <Trim-L e.Line>;
-    '\t' e.Line = <Trim-L e.Line>;
-    '\f' e.Line = <Trim-L e.Line>;
-    '\v' e.Line = <Trim-L e.Line>;
-    '\r' e.Line = <Trim-L e.Line>;
-    '\n' e.Line = <Trim-L e.Line>;
-    e.Line = e.Line;
-  }
+Trim-L +
+    S(:WhiteSpaces:)L EL +
+            = <Trim-L EL>
+    EL      = EL
   
 * <Trim-R E> == E
-  $ENTRY Trim-R {
-    e.Line ' ' = <Trim-R e.Line>;
-    e.Line '\t' = <Trim-R e.Line>;
-    e.Line '\f' = <Trim-R e.Line>;
-    e.Line '\v' = <Trim-R e.Line>;
-    e.Line '\r' = <Trim-R e.Line>;
-    e.Line '\n' = <Trim-R e.Line>;
-    e.Line = e.Line;
-  }
+Trim-R +
+    EL S(:WhiteSpaces:)L +
+            = <Trim-R EL>
+    EL      = EL
   
 * <Exist W E> == /True/ | /False/
 Exist +
