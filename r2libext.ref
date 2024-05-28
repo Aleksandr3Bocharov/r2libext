@@ -11,30 +11,22 @@
 *====================================================================
 
 R2LIBEXT    START
+            ENTRY LoadFile, SaveFile
             ENTRY Trim, Trim-L, Trim-R, WhiteSpaces 
             ENTRY Exist, Set
             EMPTY True, False
 
-  /**
-    <LoadFile e.FileName> == e.Lines
+* <LoadFile S(N)N* EF> == (EL)*
+LoadFile +
+    S(N)N EF +
+            = <OpnGet SN EF> +
+            <DoLoadFile <LibGet SN> SN> +
+            <ClsGet SN>
+    EF      = <LoadFile /0/ EF>
   
-    e.Lines ::= (e.Line)*
-    e.Line ::= s.CHAR*
-  */
-  $ENTRY LoadFile {
-    e.FileName =
-      <Open 'r' <LOAD-SAVE-HANDLE> e.FileName>
-      <DoLoadFile <Get <LOAD-SAVE-HANDLE>>>
-      <Close <LOAD-SAVE-HANDLE>>;
-  }
-  
-  DoLoadFile {
-    /* пусто */ 0 = /* конец файла, пропускаем тут пустую строку */;
-  
-    e.Line 0 = (e.Line) /* конец файла */;
-  
-    e.Line = (e.Line) <DoLoadFile <Get <LOAD-SAVE-HANDLE>>>;
-  }
+DoLoadFile +
+    SN      = 
+    EL SN   = (EL) <DoLoadFile <LibGet SN> SN>
   
   
   /**
@@ -80,3 +72,5 @@ Set +
     EU WR EB WR EE +
             = EU <Set EB WR EE>
     EU      = EU
+
+            END
