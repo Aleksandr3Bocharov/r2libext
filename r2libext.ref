@@ -16,32 +16,16 @@ R2LIBEXT    START
             ENTRY Exist, Set
             EMPTY True, False
 
-* <LoadFile S(N)N* EF> == (EL)*
+* <LoadFile SN EF> == (EL)*
 LoadFile +
-    S(N)N EF +
-            = <OpnGet SN EF> +
-            <DoLoadFile <LibGet SN> SN> +
-            <ClsGet SN>
-    EF      = <LoadFile /0/ EF>
+    SN EF   = <Open 'r' SN EF> +
+            <DoLoadFile SN <Get SN>> +
+            <Close 'r' SN>
   
 DoLoadFile +
-    SN      = 
-    EL SN   = (EL) <DoLoadFile <LibGet SN> SN>
-  
-  
-  /**
-    <SaveFile (e.FileName) e.Lines> == empty
-  */
-  $ENTRY SaveFile {
-    (e.FileName) e.Lines =
-      <Open 'w' <LOAD-SAVE-HANDLE> e.FileName>
-      <Map SaveFile-WriteBracketLine e.Lines>
-      <Close <LOAD-SAVE-HANDLE>>;
-  }
-  
-  SaveFile-WriteBracketLine {
-    (e.Line) = <Putout <LOAD-SAVE-HANDLE> e.Line>;
-  }
+    SN 0    =
+    SN EL 0 = (EL)
+    SN EL   = (EL) <DoLoadFile SN <Get SN>>
   
 * <Trim E> == E
 Trim +
