@@ -11,7 +11,7 @@
 *====================================================================
 
 R2LIBEXT    START
-            EXTRN Open, Close
+            EXTRN XOpen, XClose, XGet
             ENTRY LoadFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
@@ -19,15 +19,15 @@ R2LIBEXT    START
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +
-    SN EF   = <Open 'r' SN EF> +
-*            <DoLoadFile SN <Get SN>> +
-            <Close 'r' SN>
+    SN EF   = <XOpen 'r' SN EF> +
+            <DoLoadFile SN <XGet SN>> +
+            <XClose 'r' SN>
   
 DoLoadFile +
     SN /0/  =
     SN EL /0/ +
             = (EL)
-*    SN EL   = (EL) <DoLoadFile SN <Get SN>>
+    SN EL   = (EL) <DoLoadFile SN <XGet SN>>
   
 * <Trim E> == E
 Trim +
