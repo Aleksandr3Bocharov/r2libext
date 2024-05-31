@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-05-24
+* 2024-05-31
 * https://github.com/Aleksandr3Bocharov/r2libext
 
 *====================================================================
@@ -11,38 +11,40 @@
 *====================================================================
 
 R2LIBEXT    START
-            ENTRY LoadFile, SaveFile
-            ENTRY Trim, Trim-L, Trim-R, WhiteSpaces 
+            EXTRN Open, Close
+            ENTRY LoadFile
+            ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
             EMPTY True, False
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +
     SN EF   = <Open 'r' SN EF> +
-            <DoLoadFile SN <Get SN>> +
+*            <DoLoadFile SN <Get SN>> +
             <Close 'r' SN>
   
 DoLoadFile +
-    SN 0    =
-    SN EL 0 = (EL)
-    SN EL   = (EL) <DoLoadFile SN <Get SN>>
+    SN /0/  =
+    SN EL /0/ +
+            = (EL)
+*    SN EL   = (EL) <DoLoadFile SN <Get SN>>
   
 * <Trim E> == E
 Trim +
-    EL      = <Trim-L <Trim-R EL>>
+    EL      = <TrimL <TrimR EL>>
 
 WhiteSpaces S   ' \n\t\v\f\r'
 
-* <Trim-L E> == E
-Trim-L +
-    S(:WhiteSpaces:)L EL +
-            = <Trim-L EL>
+* <TrimL E> == E
+TrimL +
+    S(:WhiteSpaces:)W EL +
+            = <TrimL EL>
     EL      = EL
   
-* <Trim-R E> == E
-Trim-R +
-    EL S(:WhiteSpaces:)L +
-            = <Trim-R EL>
+* <TrimR E> == E
+TrimR +
+    EL S(:WhiteSpaces:)W +
+            = <TrimR EL>
     EL      = EL
   
 * <Exist W E> == /True/ | /False/

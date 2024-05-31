@@ -1,0 +1,7 @@
+TEST    START
+        EXTRN Prout, LoadFile
+        ENTRY Go
+
+Go      = <Prout <LoadFile 'test.rf'>>
+
+        END
