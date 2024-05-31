@@ -2,6 +2,6 @@ TEST    START
         EXTRN Prout, LoadFile
         ENTRY Go
 
-Go      = <Prout <LoadFile 'test.rf'>>
+Go      = <Prout <LoadFile /0/ 'test.ref'>>
 
         END
