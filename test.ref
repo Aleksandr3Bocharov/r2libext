@@ -1,7 +1,7 @@
 TEST    START
-        EXTRN Prout, LoadFile
+        EXTRN Prout, Call, Add, Cvd
         ENTRY Go
 
-Go      = <Prout <LoadFile /0/ 'test.ref'>>
+Go      = <Prout <Cvd <Call (/Add/ (/1/ /0/)) /5/>>>
 
         END

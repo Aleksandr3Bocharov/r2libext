@@ -12,10 +12,17 @@
 
 R2LIBEXT    START
             EXTRN XOpen, XClose, XGet
+            ENTRY Call
             ENTRY LoadFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
             EMPTY True, False
+
+* <Call WC EA> == ER
+Call +
+    SF EA   = < SF EA>
+    (WC EB) EA +
+            = <Call WC EB EA>
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +
