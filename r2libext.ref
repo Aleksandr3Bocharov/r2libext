@@ -12,7 +12,7 @@
 
 R2LIBEXT    START
             EXTRN XOpen, XClose, XGet
-            ENTRY Call
+            ENTRY Call, Map
             ENTRY LoadFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
@@ -23,6 +23,12 @@ Call +
     SF EA   = < SF EA>
     (WC EB) EA +
             = <Call WC EB EA>
+
+* <Map WC WI*> == ER*
+Map +
+    WC WN ET +
+            = <Call WC WN> <Map WC ET>
+    WC = 
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +

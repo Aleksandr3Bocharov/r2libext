@@ -1,7 +1,12 @@
-TEST    START
-        EXTRN Prout, Call, Add, Cvd
-        ENTRY Go
+TEST        START
+            EXTRN Prout, Map, Add, Cvd
+            ENTRY Go
 
-Go      = <Prout <Cvd <Call (/Add/ (/1/ /0/)) /5/>>>
+Go          = <Prout <Map (/Add1/ (/1/)) (/5/ /2/) /7/>>
 
-        END
+Add1 +
+    (E1) (E2) +
+            = <Add (E1) E2>
+    EA      = <Add EA>
+
+            END
