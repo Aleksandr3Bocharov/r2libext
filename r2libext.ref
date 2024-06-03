@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-05-31
+* 2024-06-03
 * https://github.com/Aleksandr3Bocharov/r2libext
 
 *====================================================================
@@ -12,7 +12,7 @@
 
 R2LIBEXT    START
             EXTRN XOpen, XClose, XGet
-            ENTRY Call, Map
+            ENTRY Call, Map, FoldL, FoldR
             ENTRY LoadFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
@@ -28,7 +28,19 @@ Call +
 Map +
     WC WN ET +
             = <Call WC WN> <Map WC ET>
-    WC = 
+    WC      =
+
+* <FoldL WC WA WI*> == WA'
+FoldL +
+    WC WA WN ET +
+            = <FoldL WC <Call WC WA WN> ET>
+    WC WA = WA
+
+* <FoldR WC WI* WA> == WA'
+FoldR +
+    WC EH WP WA +
+            = <FoldR WC EH <Call WC WP WA>>
+    WC WA = WA
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +
@@ -42,19 +54,19 @@ DoLoadFile +
             = (EL)
     SN EL   = (EL) <DoLoadFile SN <XGet SN>>
   
-* <Trim E> == E
+* <Trim E> == E'
 Trim +
     EL      = <TrimL <TrimR EL>>
 
 WhiteSpaces S   ' \n\t\v\f\r'
 
-* <TrimL E> == E
+* <TrimL E> == E'
 TrimL +
     S(:WhiteSpaces:)W EL +
             = <TrimL EL>
     EL      = EL
   
-* <TrimR E> == E
+* <TrimR E> == E'
 TrimR +
     EL S(:WhiteSpaces:)W +
             = <TrimR EL>
@@ -66,7 +78,7 @@ Exist +
             = /True/
     WS EI   = /False/
   
-* <Set W*> == W*
+* <Set WE*> == WS*
 Set +
     EU WR EB WR EE +
             = EU <Set EB WR EE>

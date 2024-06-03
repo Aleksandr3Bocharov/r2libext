@@ -1,12 +1,12 @@
 TEST        START
-            EXTRN Prout, Map, Add, Cvd
+            EXTRN Prout, FoldL, FoldR, Sub, Cvd
             ENTRY Go
 
-Go          = <Prout <Map (/Add1/ (/1/)) (/5/ /2/) /7/>>
+Go          = <Prout <FoldR /Sub1/   (/7/) (/2/) ('-'/1/)>>
 
-Add1 +
+Sub1 +
     (E1) (E2) +
-            = <Add (E1) E2>
-    EA      = <Add EA>
+            = (<Sub (E1) E2>)
+    EA      = (<Sub EA>)
 
             END
