@@ -11,9 +11,10 @@
 *====================================================================
 
 R2LIBEXT    START
-            EXTRN XOpen, XClose, XGet
+            EXTRN XOpen, XClose, XGet, XPut
             ENTRY Call, Map, FoldL, FoldR
-            ENTRY LoadFile
+            ENTRY DelAccumulator(DelAccum)
+            ENTRY LoadFile, SaveFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
             EMPTY True, False
@@ -42,6 +43,10 @@ FoldR +
             = <FoldR WC EH <Call WC WP WA>>
     WC WA = WA
 
+* <DelAccumulator W E> == E
+DelAccumulator +
+    WA ET   = ET
+
 * <LoadFile SN EF> == (EL)*
 LoadFile +
     SN EF   = <XOpen 'r' SN EF> +
@@ -53,7 +58,18 @@ DoLoadFile +
     SN EL /0/ +
             = (EL)
     SN EL   = (EL) <DoLoadFile SN <XGet SN>>
+
+
+* <SaveFile SN (EF) (EL)*> == 
+SaveFile +
+    SN (EF) EL +
+            = <XOpen 'w' SN EF> +
+            <Map (/SaveFileWriteBracketLine/ SN) EL> +
+            <XClose 'w' SN>
   
+SaveFileWriteBracketLine +
+    SN (EL) = <XPut SN EL>
+
 * <Trim E> == E'
 Trim +
     EL      = <TrimL <TrimR EL>>

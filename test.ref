@@ -1,0 +1,8 @@
+TEST        START
+            EXTRN Print, LoadFile, SaveFile
+            ENTRY Go
+
+Go          = <SaveFile /0/ ('test1.txt') +
+            <Print <LoadFile /0/ 'test.ref'>>>
+
+            END
