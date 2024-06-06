@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-03
+* 2024-06-06
 * https://github.com/Aleksandr3Bocharov/r2libext
 
 *====================================================================
@@ -13,7 +13,7 @@
 R2LIBEXT    START
             EXTRN XOpen, XClose, XGet, XPut
             ENTRY Call, Map, FoldL, FoldR
-            ENTRY DelAccumulator(DelAccum)
+            ENTRY MapAccum, DelAccum
             ENTRY LoadFile, SaveFile
             ENTRY Trim, TrimL, TrimR, WhiteSpaces(WSpaces) 
             ENTRY Exist, Set
@@ -43,9 +43,28 @@ FoldR +
             = <FoldR WC EH <Call WC WP WA>>
     WC WA = WA
 
-* <DelAccumulator W E> == E
-DelAccumulator +
-    WA ET   = ET
+* <MapAccum WC WA WI*> == WA′ ER
+MapAccum +
+    WC WA ET +
+            = <DoMapAccum WC WA () ET>
+  
+DoMapAccum +
+    WC WA (ES) WN ET +
+            = <DoMapAccum WC +
+                <MapAccumAddScanned +
+                    <Call WC WA WN> +
+                (ES)> +
+            ET>
+    WC WA (ER) +
+            = WA ER
+  
+MapAccumAddScanned + 
+    WA EA (ES) +
+            = WA (ES EA)
+
+* <DelAccum W E> == E
+DelAccum +
+    WA ER   = ER
 
 * <LoadFile SN EF> == (EL)*
 LoadFile +
