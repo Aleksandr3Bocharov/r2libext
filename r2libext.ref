@@ -49,18 +49,18 @@ MapAccum +
             = <DoMapAccum WC WA () ET>
   
 DoMapAccum +
-    WC WA (ES) WN ET +
+    WC WA (ER) WN ET +
             = <DoMapAccum WC +
                 <MapAccumAddScanned +
                     <Call WC WA WN> +
-                (ES)> +
+                (ER)> +
             ET>
     WC WA (ER) +
             = WA ER
   
 MapAccumAddScanned + 
-    WA EA (ES) +
-            = WA (ES EA)
+    WA ES (ER) +
+            = WA (ER ES)
 
 * <DelAccum W E> == E
 DelAccum +

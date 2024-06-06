@@ -1,8 +1,10 @@
 TEST        START
-            EXTRN Print, LoadFile, SaveFile
+            EXTRN Prout, DelAccum, MapAccum, Add
             ENTRY Go
 
-Go          = <SaveFile /0/ ('test1.txt') +
-            <Print <LoadFile /0/ 'test.ref'>>>
+Go          = <Prout <MapAccum (/D/ (/1/)) /1/ 'hfhg'>>
+
+D   WN SA SC +
+            = <Add WN SA> (SC)
 
             END
