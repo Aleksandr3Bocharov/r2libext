@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-07
+* 2024-06-11
 * https://github.com/Aleksandr3Bocharov/r2libext
 
 *====================================================================
@@ -25,7 +25,7 @@ Call +
     (WC EB) EA +
             = <Call WC EB EA>
 
-* <Map WC WI*> == ER*
+* <Map WC WI*> == ER
 Map +
     WC WN ET +
             = <Call WC WN> <Map WC ET>
@@ -66,7 +66,7 @@ MapAccumAddScanned +
 DelAccum +
     WA ER   = ER
 
-* <LoadFile SN EF> == (EL)*
+* <LoadFile S(/0/../4/)N V(O)F> == (E(O)L)*
 LoadFile +
     SN EF   = <XOpen 'r' SN EF> +
             <DoLoadFile SN <XGet SN>> +
@@ -79,7 +79,7 @@ DoLoadFile +
     SN EL   = (EL) <DoLoadFile SN <XGet SN>>
 
 
-* <SaveFile SN (EF) (EL)*> == 
+* <SaveFile S(/0/../4/)N (V(O)F) (E(O)L)*> == 
 SaveFile +
     SN (EF) EL +
             = <XOpen 'w' SN EF> +
